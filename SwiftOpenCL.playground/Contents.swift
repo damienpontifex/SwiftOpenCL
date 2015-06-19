@@ -81,6 +81,10 @@ class Context {
 		
 		context = clCreateContext(nil, cl_uint(numDevices), &deviceIds, nil, nil, nil)
 	}
+	
+	deinit {
+		clReleaseContext(context)
+	}
 }
 
 class CommandQueue {
@@ -91,7 +95,50 @@ class CommandQueue {
 }
 
 class Program {
+	var program: cl_program!
 	
+	init(context: Context, programSource: String) {
+		
+		programSource.withCString() { cString -> Void in
+			let pointer = UnsafeMutablePointer<UnsafePointer<Int8>>(cString)
+			self.program = clCreateProgramWithSource(context.context, 1, pointer, nil, nil)
+			return Void()
+		}
+	}
+	
+	func build(device: Device) {
+		clBuildProgram(program,
+			1,
+			&device.deviceId,
+			nil,
+			nil,
+			nil)
+	}
+	
+	deinit {
+		if program != nil {
+			clReleaseProgram(program)
+		}
+	}
+}
+
+class Kernel {
+	var kernel: cl_kernel!
+	
+	init(program: Program, kernelName: String) {
+		kernelName.withCString() { cKernelName in
+			self.kernel = clCreateKernel(
+				program.program,
+				cKernelName,
+				nil)
+		}
+	}
+	
+	deinit {
+		if kernel != nil {
+			clReleaseKernel(kernel)
+		}
+	}
 }
 
 class GclCommandQueue {
@@ -150,18 +197,111 @@ class Device: Printable {
 	}
 }
 
-let device = Device.getDefault(CL_DEVICE_TYPE_CPU)
-device.getStringInfo(CL_DEVICE_NAME)
+//let device = Device.getDefault(CL_DEVICE_TYPE_CPU)
+//device.getStringInfo(CL_DEVICE_NAME)
+//
+//let queue = GclCommandQueue(deviceType: CL_DEVICE_TYPE_GPU)
+//let queueDevice = queue.getDevice()
+//queueDevice.getStringInfo(CL_DEVICE_NAME)
+//queueDevice.getGenericInfo(CL_DEVICE_ADDRESS_BITS, infoType: cl_uint.self)
+//queueDevice.getStringInfo(CL_DEVICE_EXTENSIONS)
 
-let queue = GclCommandQueue(deviceType: CL_DEVICE_TYPE_GPU)
-let queueDevice = queue.getDevice()
-queueDevice.getStringInfo(CL_DEVICE_NAME)
-queueDevice.getGenericInfo(CL_DEVICE_ADDRESS_BITS, infoType: cl_uint.self)
-queueDevice.getStringInfo(CL_DEVICE_EXTENSIONS)
+let vecAdd =
+	"__kernel                                            \n" +
+	"void vecadd(__global int *A,                        \n" +
+	"            __global int *B,                        \n" +
+	"            __global int *C)                        \n" +
+	"{                                                   \n" +
+	"                                                    \n" +
+	"   // Get the work-item’s unique ID                 \n" +
+	"   int idx = get_global_id(0);                      \n" +
+	"                                                    \n" +
+	"   // Add the corresponding locations of            \n" +
+	"   // 'A' and 'B', and store the result in 'C'.     \n" +
+	"   C[idx] = A[idx] + B[idx];                        \n" +
+	"}                                                   \n"
 
 let platforms = Platform.allPlatforms()
-println(platforms.first)
-println(platforms.first?.getDevices(CL_DEVICE_TYPE_CPU))
+let devices = platforms.first!.getDevices(CL_DEVICE_TYPE_CPU)
+
+let context = Context(devices: devices)
+let commandQueue = CommandQueue(context: context, device: devices.first!)
+
+// Create and compile program
+let program = Program(context: context, programSource: vecAdd)
+program.build(devices.first!)
+// Create kernel
+let kernel = Kernel(program: program, kernelName: "vecadd")
+// Buffers
+// Write host data to buffers
+// Set kernal arguments
+var a = [1, 2, 3, 4, 5, 6, 7, 8]
+var b = a
+var c = a
+let memA = UnsafeMutablePointer<Void>(a)
+let memB = UnsafeMutablePointer<Void>(b)
+var aBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(Int) * 8, memA, nil) as cl_mem
+var bBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(Int) * 8, memB, nil) as cl_mem
+var cBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), sizeof(Int) * 8, nil, nil) as cl_mem
+
+clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), &aBuffer)
+clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), &bBuffer)
+clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), &cBuffer)
+// Configure work-item structure
+var ndRange = cl_ndrange()
+// Enqueue kernel for execution
+var itemCount = 0
+clEnqueueNDRangeKernel(commandQueue.queue,
+ kernel.kernel,
+	cl_uint(1),
+	nil,
+	&itemCount,
+	nil,
+	0,
+	nil,
+	nil)
+// Read output buffer back to host
+clEnqueueReadBuffer(commandQueue.queue, cBuffer, CL_TRUE, 0, sizeof(Int) * 8, &c, 0, nil, nil)
+// Release any resources
+println(c)
+
+clReleaseMemObject(aBuffer)
+clReleaseMemObject(bBuffer)
+clReleaseMemObject(cBuffer)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
