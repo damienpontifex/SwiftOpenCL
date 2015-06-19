@@ -22,8 +22,8 @@ let devices = platforms.first!.getDevices(CL_DEVICE_TYPE_CPU)
 let context = Context(devices: devices)
 let commandQueue = CommandQueue(context: context, device: devices.first!)
 let program = Program(context: context, programSource: vecAdd)
-program.build(devices.first!)
-let kernel = Kernel(program: program, kernelName: "vec_add")
+program?.build(devices.first!)
+let kernel = Kernel(program: program!, kernelName: "vec_add")!
 
 let times = 10
 var timeTaken: NSTimeInterval = 0.0

@@ -4,7 +4,7 @@ import OpenCL
 public class Kernel {
 	public var kernel: cl_kernel
 	
-	public init(program: Program, kernelName: String) {
+	public init?(program: Program, kernelName: String) {
 		
 		kernel = kernelName.withCString() { cKernelName -> cl_kernel in
 			var status: cl_int = CL_SUCCESS
@@ -14,7 +14,8 @@ public class Kernel {
 				&status)
 			
 			if status != CL_SUCCESS {
-				print("Create kernel error \(status)")
+				print("Create kernel error \(status)")				
+				return nil
 			}
 			
 			return sourceKernel

@@ -4,7 +4,7 @@ import OpenCL
 public class Program {
 	public var program: cl_program
 	
-	public init(context: Context, programSource: String) {
+	public init?(context: Context, programSource: String) {
 		
 		var status: cl_int = CL_SUCCESS
 		program = programSource.withCString() { (var cString) -> cl_program in
@@ -16,10 +16,11 @@ public class Program {
 		if status != CL_SUCCESS {
 			//			let error = ClError(rawValue: status) ?? ClError.CL_UNKNOWN_ERROR
 			print("Create program error \(status)")
+			return nil
 		}
 	}
 	
-	public func build(device: Device) {
+	public func build(device: Device) -> Bool {
 		let status = clBuildProgram(program,
 			1,
 			&device.deviceId,
@@ -29,13 +30,19 @@ public class Program {
 		
 		if status != CL_SUCCESS {
 			print("Build program error \(status)")
+	
 			var length: Int = 0
 			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), 0, nil, &length)
 			
 			var value = Array<CChar>(count: length, repeatedValue: CChar(32))
 			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), length, &value, nil)
-			print("Build log \(String.fromCString(&value))")
+			
+			print("CLProgram build log \(String.fromCString(&value))")
+			
+			return false
 		}
+		
+		return true
 	}
 	
 	deinit {
