@@ -213,18 +213,36 @@ class Program {
 	}
 }
 
-class Buffer {
+class Buffer<T> {
 	var buffer: cl_mem
 	var size: Int
-	init(context: Context, flags: cl_mem_flags, size: Int, data: UnsafeMutablePointer<Void>? = nil) {
-		self.size = size
-		buffer = clCreateBuffer(context.context, flags, size, data ?? nil, nil)
+	var count: Int
+	
+	init(context: Context, var readOnlyData: [T]) {
+		count = readOnlyData.count
+		size = sizeof(T) * count
+		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size, &readOnlyData, nil)
 	}
 	
-	func enqueueRead(queue: CommandQueue) -> [cl_int] {
-		var elements = Array<cl_int>(count: size / sizeof(cl_int), repeatedValue: cl_int(0))
-		clEnqueueReadBuffer(queue.queue, buffer, cl_bool(CL_TRUE), 0, size, &elements, 0, nil, nil)
-		return elements
+	init(context: Context, count: Int) {
+		size = sizeof(T) * count
+		self.count = count
+		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), size, nil, nil)
+	}
+	
+	func enqueueRead(queue: CommandQueue) -> [T] {
+		let elements = UnsafeMutablePointer<T>.alloc(count)
+		
+		clEnqueueReadBuffer(queue.queue, buffer, cl_bool(CL_TRUE), 0, size, elements, 0, nil, nil)
+		
+		let array = Array<T>(UnsafeBufferPointer(start: elements, count: count))
+		elements.dealloc(count)
+		
+		return array
+	}
+	
+	func enqueueWrite(queue: CommandQueue, data: [T]) {
+		//		clEnqueueWriteBuffer(queue.queue, buffer, <#T##cl_bool#>, <#T##Int#>, <#T##Int#>, <#T##UnsafePointer<Void>#>, <#T##cl_uint#>, <#T##UnsafePointer<cl_event>#>, <#T##UnsafeMutablePointer<cl_event>#>)
 	}
 	
 	deinit {
@@ -252,7 +270,7 @@ class Kernel {
 		}
 	}
 	
-	func setArg(position: cl_uint, buffer: Buffer) -> cl_int {
+	func setArg<T>(position: cl_uint, buffer: Buffer<T>) -> cl_int {
 		return clSetKernelArg(kernel, position, sizeof(cl_mem), &(buffer.buffer))
 	}
 	
@@ -365,11 +383,9 @@ for i in 0..<2048 {
 	b[i] = cl_int(i)
 }
 
-let memA = UnsafeMutablePointer<Void>(a)
-let memB = UnsafeMutablePointer<Void>(b)
-let aBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size: sizeof(cl_int) * elements, data: memA)
-var bBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size: sizeof(cl_int) * elements, data: memB)
-var cBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_WRITE_ONLY), size: sizeof(cl_int) * elements)
+let aBuffer = Buffer(context: context, readOnlyData: a)
+let bBuffer = Buffer(context: context, readOnlyData: b)
+let cBuffer = Buffer<cl_int>(context: context, count: elements)
 
 var status = kernel.setArg(0, buffer: aBuffer)
 status |= kernel.setArg(1, buffer: bBuffer)
