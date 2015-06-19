@@ -2,6 +2,80 @@
 
 import OpenCL
 
+enum ClError: cl_int, ErrorType {
+	// run-time and JIT compiler errors
+	case CL_SUCCESS = 0
+	case CL_DEVICE_NOT_FOUND = -1
+	case CL_DEVICE_NOT_AVAILABLE = -2
+	case CL_COMPILER_NOT_AVAILABLE = -3
+	case CL_MEM_OBJECT_ALLOCATION_FAILURE = -4
+	case CL_OUT_OF_RESOURCES = -5
+	case CL_OUT_OF_HOST_MEMORY = -6
+	case CL_PROFILING_INFO_NOT_AVAILABLE = -7
+	case CL_MEM_COPY_OVERLAP = -8
+	case CL_IMAGE_FORMAT_MISMATCH = -9
+	case CL_IMAGE_FORMAT_NOT_SUPPORTED = -10
+	case CL_BUILD_PROGRAM_FAILURE = -11
+	case CL_MAP_FAILURE = -12
+	case CL_MISALIGNED_SUB_BUFFER_OFFSET = -13
+	case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST = -14
+	case CL_COMPILE_PROGRAM_FAILURE = -15
+	case CL_LINKER_NOT_AVAILABLE = -16
+	case CL_LINK_PROGRAM_FAILURE = -17
+	case CL_DEVICE_PARTITION_FAILED = -18
+	case CL_KERNEL_ARG_INFO_NOT_AVAILABLE = -19
+	
+	// compile-time errors
+	case CL_INVALID_VALUE = -30
+	case CL_INVALID_DEVICE_TYPE = -31
+	case CL_INVALID_PLATFORM = -32
+	case CL_INVALID_DEVICE = -33
+	case CL_INVALID_CONTEXT = -34
+	case CL_INVALID_QUEUE_PROPERTIES = -35
+	case CL_INVALID_COMMAND_QUEUE = -36
+	case CL_INVALID_HOST_PTR = -37
+	case CL_INVALID_MEM_OBJECT = -38
+	case CL_INVALID_IMAGE_FORMAT_DESCRIPTOR = -39
+	case CL_INVALID_IMAGE_SIZE = -40
+	case CL_INVALID_SAMPLER = -41
+	case CL_INVALID_BINARY = -42
+	case CL_INVALID_BUILD_OPTIONS = -43
+	case CL_INVALID_PROGRAM = -44
+	case CL_INVALID_PROGRAM_EXECUTABLE = -45
+	case CL_INVALID_KERNEL_NAME = -46
+	case CL_INVALID_KERNEL_DEFINITION = -47
+	case CL_INVALID_KERNEL = -48
+	case CL_INVALID_ARG_INDEX = -49
+	case CL_INVALID_ARG_VALUE = -50
+	case CL_INVALID_ARG_SIZE = -51
+	case CL_INVALID_KERNEL_ARGS = -52
+	case CL_INVALID_WORK_DIMENSION = -53
+	case CL_INVALID_WORK_GROUP_SIZE = -54
+	case CL_INVALID_WORK_ITEM_SIZE = -55
+	case CL_INVALID_GLOBAL_OFFSET = -56
+	case CL_INVALID_EVENT_WAIT_LIST = -57
+	case CL_INVALID_EVENT = -58
+	case CL_INVALID_OPERATION = -59
+	case CL_INVALID_GL_OBJECT = -60
+	case CL_INVALID_BUFFER_SIZE = -61
+	case CL_INVALID_MIP_LEVEL = -62
+	case CL_INVALID_GLOBAL_WORK_SIZE = -63
+	case CL_INVALID_PROPERTY = -64
+	case CL_INVALID_IMAGE_DESCRIPTOR = -65
+	case CL_INVALID_COMPILER_OPTIONS = -66
+	case CL_INVALID_LINKER_OPTIONS = -67
+	case CL_INVALID_DEVICE_PARTITION_COUNT = -68
+	
+	// extension errors
+	case CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR = -1000
+	case CL_PLATFORM_NOT_FOUND_KHR = -1001
+	case CL_INVALID_D3D10_DEVICE_KHR = -1002
+	case CL_INVALID_D3D10_RESOURCE_KHR = -1003
+	case CL_D3D10_RESOURCE_ALREADY_ACQUIRED_KHR = -1004
+	case CL_D3D10_RESOURCE_NOT_ACQUIRED_KHR = -1005
+	case CL_UNKNOWN_ERROR = -999999
+}
+
 class Wrapper<T> {
 	var object: T?
 }
@@ -13,7 +87,7 @@ extension String: Initable {}
 extension cl_uint: Initable {}
 extension CChar: Initable {}
 
-class Platform : Printable {
+class Platform : CustomStringConvertible {
 	var platformId: cl_platform_id
 	init(id: cl_platform_id) {
 		platformId = id
@@ -34,7 +108,7 @@ class Platform : Printable {
 		
 		clGetPlatformIDs(platformCount, &platformIds, nil)
 		
-		let platforms = map(platformIds) {
+		let platforms = platformIds.map {
 			Platform(id: $0)
 		}
 		
@@ -62,7 +136,7 @@ class Platform : Printable {
 		
 		clGetDeviceIDs(platformId, cl_device_type(deviceType), deviceCount, &deviceIds, nil)
 		
-		let devices = map(deviceIds) {
+		let devices = deviceIds.map {
 			Device(id: $0)
 		}
 		
@@ -75,7 +149,7 @@ class Context {
 	init(devices: [Device]) {
 		
 		let numDevices = devices.count
-		var deviceIds = map(devices) {
+		var deviceIds = devices.map {
 			$0.deviceId
 		}
 		
@@ -95,24 +169,41 @@ class CommandQueue {
 }
 
 class Program {
-	var program: cl_program!
+	var program: cl_program
 	
-	init(context: Context, programSource: String) {
+	init(context: Context, programSource: String) throws {
 		
-		programSource.withCString() { cString -> Void in
-			let pointer = UnsafeMutablePointer<UnsafePointer<Int8>>(cString)
-			self.program = clCreateProgramWithSource(context.context, 1, pointer, nil, nil)
-			return Void()
+		var status: cl_int = CL_SUCCESS
+		program = programSource.withCString() { (var cString) -> cl_program in
+			return withUnsafeMutablePointer(&cString) { mutableCString -> cl_program in
+				let sourceProgram = clCreateProgramWithSource(context.context, 1, mutableCString, nil, &status)
+				return sourceProgram
+			}
+		}
+		if status != CL_SUCCESS {
+			let error = ClError(rawValue: status) ?? ClError.CL_UNKNOWN_ERROR
+			print("Create program error \(error)")
+			throw error
 		}
 	}
 	
 	func build(device: Device) {
-		clBuildProgram(program,
+		let status = clBuildProgram(program,
 			1,
 			&device.deviceId,
 			nil,
 			nil,
 			nil)
+		
+		if status != CL_SUCCESS {
+			print("Build program error \(status)")
+			var length: Int = 0
+			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), 0, nil, &length)
+			
+			var value = Array<CChar>(count: length, repeatedValue: CChar(32))
+			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), length, &value, nil)
+			print("Build log \(String.fromCString(&value))")
+		}
 	}
 	
 	deinit {
@@ -122,15 +213,27 @@ class Program {
 	}
 }
 
+class Buffer {
+	
+}
+
 class Kernel {
-	var kernel: cl_kernel!
+	var kernel: cl_kernel
 	
 	init(program: Program, kernelName: String) {
-		kernelName.withCString() { cKernelName in
-			self.kernel = clCreateKernel(
+		
+		kernel = kernelName.withCString() { cKernelName -> cl_kernel in
+			var status: cl_int = CL_SUCCESS
+			let sourceKernel = clCreateKernel(
 				program.program,
 				cKernelName,
-				nil)
+				&status)
+			
+			if status != CL_SUCCESS {
+				print("Create kernel error \(status)")
+			}
+			
+			return sourceKernel
 		}
 	}
 	
@@ -144,7 +247,7 @@ class Kernel {
 class GclCommandQueue {
 	let queue: dispatch_queue_t
 	init(deviceType: Int32) {
-		queue = gcl_create_dispatch_queue(cl_queue_flags(deviceType), nil)
+		queue = gcl_create_dispatch_queue(cl_queue_flags(deviceType), nil)!
 	}
 	
 	func getDevice() -> Device {
@@ -153,7 +256,7 @@ class GclCommandQueue {
 	}
 }
 
-class Device: Printable {
+class Device: CustomStringConvertible {
 	
 	var deviceId: cl_device_id
 	
@@ -168,9 +271,9 @@ class Device: Printable {
 	class func getDefault(type: Int32) -> Device {
 		let queue = gcl_create_dispatch_queue(cl_queue_flags(type), nil)
 		
-		let deviceId = gcl_get_device_id_with_dispatch_queue(queue)
+		let deviceId = gcl_get_device_id_with_dispatch_queue(queue!)
 		
-		var device = Device(id: deviceId)
+		let device = Device(id: deviceId)
 		return device
 	}
 	
@@ -207,7 +310,7 @@ class Device: Printable {
 //queueDevice.getStringInfo(CL_DEVICE_EXTENSIONS)
 
 let vecAdd =
-	"__kernel                                            \n" +
+"__kernel                                            \n" +
 	"void vecadd(__global int *A,                        \n" +
 	"            __global int *B,                        \n" +
 	"            __global int *C)                        \n" +
@@ -219,7 +322,7 @@ let vecAdd =
 	"   // Add the corresponding locations of            \n" +
 	"   // 'A' and 'B', and store the result in 'C'.     \n" +
 	"   C[idx] = A[idx] + B[idx];                        \n" +
-	"}                                                   \n"
+"}                                                   \n"
 
 let platforms = Platform.allPlatforms()
 let devices = platforms.first!.getDevices(CL_DEVICE_TYPE_CPU)
@@ -228,42 +331,54 @@ let context = Context(devices: devices)
 let commandQueue = CommandQueue(context: context, device: devices.first!)
 
 // Create and compile program
-let program = Program(context: context, programSource: vecAdd)
+let program = try Program(context: context, programSource: vecAdd)
 program.build(devices.first!)
 // Create kernel
 let kernel = Kernel(program: program, kernelName: "vecadd")
 // Buffers
 // Write host data to buffers
 // Set kernal arguments
-var a = [1, 2, 3, 4, 5, 6, 7, 8]
+let elements = 2048
+var a = Array<cl_int>(count: elements, repeatedValue: cl_int(0))
 var b = a
-var c = a
+for i in 0..<2048 {
+	a[i] = cl_int(i)
+	b[i] = cl_int(i)
+}
+var c = Array<cl_int>(count: elements, repeatedValue: 0)
 let memA = UnsafeMutablePointer<Void>(a)
 let memB = UnsafeMutablePointer<Void>(b)
-var aBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(Int) * 8, memA, nil) as cl_mem
-var bBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(Int) * 8, memB, nil) as cl_mem
-var cBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), sizeof(Int) * 8, nil, nil) as cl_mem
+var aBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(cl_int) * elements, memA, nil) as cl_mem
+var bBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(cl_int) * elements, memB, nil) as cl_mem
+var cBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), sizeof(cl_int) * elements, nil, nil) as cl_mem
 
-clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), &aBuffer)
-clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), &bBuffer)
-clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), &cBuffer)
+var status = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), &aBuffer)
+status |= clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), &bBuffer)
+status |= clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), &cBuffer)
+
+if status != CL_SUCCESS {
+	print("Set kernel arg failed \(status)")
+}
+
 // Configure work-item structure
-var ndRange = cl_ndrange()
 // Enqueue kernel for execution
-var itemCount = 0
-clEnqueueNDRangeKernel(commandQueue.queue,
- kernel.kernel,
-	cl_uint(1),
-	nil,
-	&itemCount,
+var workDim: cl_uint = 1
+var globalWorkSize: size_t = elements
+var globalWorkOffset: size_t = 0
+clEnqueueNDRangeKernel(
+	commandQueue.queue,
+	kernel.kernel,
+	workDim,
+	&globalWorkOffset,
+	&globalWorkSize,
 	nil,
 	0,
 	nil,
 	nil)
 // Read output buffer back to host
-clEnqueueReadBuffer(commandQueue.queue, cBuffer, CL_TRUE, 0, sizeof(Int) * 8, &c, 0, nil, nil)
+clEnqueueReadBuffer(commandQueue.queue, cBuffer, cl_bool(CL_TRUE), 0, sizeof(cl_int) * elements, &c, 0, nil, nil)
 // Release any resources
-println(c)
+print(c)
 
 clReleaseMemObject(aBuffer)
 clReleaseMemObject(bBuffer)
