@@ -214,7 +214,22 @@ class Program {
 }
 
 class Buffer {
+	var buffer: cl_mem
+	var size: Int
+	init(context: Context, flags: cl_mem_flags, size: Int, data: UnsafeMutablePointer<Void>? = nil) {
+		self.size = size
+		buffer = clCreateBuffer(context.context, flags, size, data ?? nil, nil)
+	}
 	
+	func enqueueRead(queue: CommandQueue) -> [cl_int] {
+		var elements = Array<cl_int>(count: size / sizeof(cl_int), repeatedValue: cl_int(0))
+		clEnqueueReadBuffer(queue.queue, buffer, cl_bool(CL_TRUE), 0, size, &elements, 0, nil, nil)
+		return elements
+	}
+	
+	deinit {
+		clReleaseMemObject(buffer)
+	}
 }
 
 class Kernel {
@@ -235,6 +250,10 @@ class Kernel {
 			
 			return sourceKernel
 		}
+	}
+	
+	func setArg(position: cl_uint, buffer: Buffer) -> cl_int {
+		return clSetKernelArg(kernel, position, sizeof(cl_mem), &(buffer.buffer))
 	}
 	
 	deinit {
@@ -345,16 +364,16 @@ for i in 0..<2048 {
 	a[i] = cl_int(i)
 	b[i] = cl_int(i)
 }
-var c = Array<cl_int>(count: elements, repeatedValue: 0)
+
 let memA = UnsafeMutablePointer<Void>(a)
 let memB = UnsafeMutablePointer<Void>(b)
-var aBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(cl_int) * elements, memA, nil) as cl_mem
-var bBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), sizeof(cl_int) * elements, memB, nil) as cl_mem
-var cBuffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), sizeof(cl_int) * elements, nil, nil) as cl_mem
+let aBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size: sizeof(cl_int) * elements, data: memA)
+var bBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size: sizeof(cl_int) * elements, data: memB)
+var cBuffer = Buffer(context: context, flags: cl_mem_flags(CL_MEM_WRITE_ONLY), size: sizeof(cl_int) * elements)
 
-var status = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), &aBuffer)
-status |= clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), &bBuffer)
-status |= clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), &cBuffer)
+var status = kernel.setArg(0, buffer: aBuffer)
+status |= kernel.setArg(1, buffer: bBuffer)
+status |= kernel.setArg(2, buffer: cBuffer)
 
 if status != CL_SUCCESS {
 	print("Set kernel arg failed \(status)")
@@ -376,13 +395,9 @@ clEnqueueNDRangeKernel(
 	nil,
 	nil)
 // Read output buffer back to host
-clEnqueueReadBuffer(commandQueue.queue, cBuffer, cl_bool(CL_TRUE), 0, sizeof(cl_int) * elements, &c, 0, nil, nil)
+let c = cBuffer.enqueueRead(commandQueue)
 // Release any resources
 print(c)
-
-clReleaseMemObject(aBuffer)
-clReleaseMemObject(bBuffer)
-clReleaseMemObject(cBuffer)
 
 
 
