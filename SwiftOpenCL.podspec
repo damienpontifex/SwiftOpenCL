@@ -1,24 +1,21 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftOpenCL"
   s.version      = "0.0.1"
-  s.summary      = "A short description of SwiftOpenCL."
+  s.summary      = "Swift OpenCL wrapper"
 
   s.description  = <<-DESC
-                   A longer description of SwiftOpenCL in Markdown format.
-
-                   * Think: Why did you write this? What is the focus? What does it do?
-                   * CocoaPods will be using this to generate tags, and improve search results.
-                   * Try to keep it short, snappy and to the point.
-                   * Finally, don't worry about the indent, CocoaPods strips it!
+                   Object Oriented wrapper around the OpenCL API. Inspired
+                   by the C++ implementation and developed to avoid the 
+                   pain of interfacing the C style structure of the library
+                   to Swift equivalents
                    DESC
 
-  s.homepage     = "http://EXAMPLE/SwiftOpenCL"
-  s.license      = "MIT (example)"
+  s.homepage     = "http://github.com/damienpontifex/SwiftOpenCL"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Damien Pontifex" => "damien.pontifex@gmail.com" }
   s.social_media_url   = "http://twitter.com/DamienPontifex"
-  s.platform     = :osx
-  s.source       = { :git => "http://github.com/damienpontifex/SwiftOpenCL.git", :tag => "0.0.1" }
+  s.platform     = :osx, "10.9"
+  s.source       = { :git => "https://github.com/damienpontifex/SwiftOpenCL.git", :tag => "0.0.1" }
   s.source_files  = "SwiftOpenCL.playground/Sources/**/*.swift"
   s.framework  = "OpenCL"
 end
