@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.author             = { "Damien Pontifex" => "damien.pontifex@gmail.com" }
   s.social_media_url   = "http://twitter.com/DamienPontifex"
   s.platform     = :osx, "10.9"
-  s.source       = { :git => "https://github.com/damienpontifex/SwiftOpenCL.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/damienpontifex/SwiftOpenCL.git", :tag => s.version }
   s.source_files  = "SwiftOpenCL.playground/Sources/**/*.swift"
   s.framework  = "OpenCL"
 end
