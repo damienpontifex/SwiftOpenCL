@@ -31,55 +31,58 @@ var timeTaken: NSTimeInterval = 0.0
 
 	let elements = 2048// * index
 
-	var a = map(0..<elements) {
-		cl_int($0)
-	}
-	var b = a
+var a = Array<cl_int4>(count: elements / 4, repeatedValue: cl_int4())
 
-	let start = NSDate()
+for idx in 0..<(elements / 4) {
+	a[idx] = cl_int4(idx)
+}
 
-	let aBuffer = Buffer(context: context, readOnlyData: a)
-	let bBuffer = Buffer(context: context, readOnlyData: b)
-	let cBuffer = Buffer<cl_int>(context: context, count: elements)
-	
-	var status = kernel.setArg(0, buffer: aBuffer)
-	status |= kernel.setArg(1, buffer: bBuffer)
-	status |= kernel.setArg(2, buffer: cBuffer)
-	
-	if status != CL_SUCCESS {
-		print("Set kernel arg failed \(status)")
-	}
-	
-	var workDim: cl_uint = 1
-	var globalWorkSize: size_t = elements
-	var globalWorkOffset: size_t = 0
-	clEnqueueNDRangeKernel(
-		commandQueue.queue,
-		kernel.kernel,
-		workDim,
-		&globalWorkOffset,
-		&globalWorkSize,
-		nil,
-		0,
-		nil,
-		nil)
+var b = a
 
-	var c = cBuffer.enqueueRead(commandQueue)
+let start = NSDate()
 
-	print(c)
-	timeTaken = NSDate().timeIntervalSinceDate(start)
+let aBuffer = Buffer(context: context, readOnlyData: a)
+let bBuffer = Buffer(context: context, readOnlyData: b)
+let cBuffer = Buffer<cl_int4>(context: context, count: elements / 4)
 
-let accelerateStartDate = NSDate()
+var status = kernel.setArg(0, buffer: aBuffer)
+status |= kernel.setArg(1, buffer: bBuffer)
+status |= kernel.setArg(2, buffer: cBuffer)
 
-var a32: [Int32] = a
-var b32: [Int32] = b
-var c32: [Int32] = c
+if status != CL_SUCCESS {
+	print("Set kernel arg failed \(status)")
+}
 
-vDSP_vaddi(a32, 1, b32, 1, &c32, 1, vDSP_Length(elements))
+var workDim: cl_uint = 1
+var globalWorkSize: size_t = elements / 4
+var globalWorkOffset: size_t = 0
+clEnqueueNDRangeKernel(
+	commandQueue.queue,
+	kernel.kernel,
+	workDim,
+	&globalWorkOffset,
+	&globalWorkSize,
+	nil,
+	0,
+	nil,
+	nil)
+
+var c = cBuffer.enqueueRead(commandQueue)
 
 print(c)
+timeTaken = NSDate().timeIntervalSinceDate(start)
 
-NSDate().timeIntervalSinceDate(accelerateStartDate)
+//let accelerateStartDate = NSDate()
+//
+//var a32: [Int32] = a
+//var b32: [Int32] = b
+//var c32: [Int32] = c
+//
+//vDSP_vaddi(a32, 1, b32, 1, &c32, 1, vDSP_Length(elements))
+//
+//print(c)
+//
+//NSDate().timeIntervalSinceDate(accelerateStartDate)
 
 
 

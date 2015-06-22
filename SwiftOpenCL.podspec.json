@@ -1,0 +1,25 @@
+{
+	"name": "SwiftOpenCL",
+	"version": "0.0.1",
+	"summary": "Swift OpenCL wrapper",
+	"description": "Object Oriented wrapper around the OpenCL API. Inspired by the C++ implementation and developed to avoid the pain of interfacing the C style structure of the library to Swift equivalents",
+	"homepage": "http://github.com/damienpontifex/SwiftOpenCL",
+	"license": { 
+		"type": "MIT",
+		"file": "LICENSE" 
+	},
+	"authors": { 
+		"Damien Pontifex": "damien.pontifex@gmail.com" 
+	},
+	"social_media_url": "http://twitter.com/DamienPontifex",
+	"requires_arc": "true",
+	"platforms": {
+		"osx": "10.9"
+	},
+	"source": { 
+		"git": "https://github.com/damienpontifex/SwiftOpenCL.git",
+		"tag": "0.0.1"
+	},
+	"source_files": "SwiftOpenCL.playground/Sources/**/*.swift",
+	"frameworks": "OpenCL"
+}
