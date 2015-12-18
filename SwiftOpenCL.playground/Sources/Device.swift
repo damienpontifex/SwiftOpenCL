@@ -1,7 +1,6 @@
-import Foundation
 import OpenCL
 
-public class Device: Printable {
+public class Device: CustomStringConvertible {
 	
 	public var deviceId: cl_device_id
 	

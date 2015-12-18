@@ -1,4 +1,3 @@
-import Foundation
 import OpenCL
 
 public class Buffer<T> {

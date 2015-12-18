@@ -1,4 +1,3 @@
-import Foundation
 import OpenCL
 
 //enum ClError: cl_int, ErrorType {

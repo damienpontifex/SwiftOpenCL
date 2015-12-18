@@ -1,7 +1,6 @@
-import Foundation
 import OpenCL
 
-public class Platform : Printable {
+public class Platform : CustomStringConvertible {
 	public var platformId: cl_platform_id
 	public init(id: cl_platform_id) {
 		platformId = id

@@ -1,4 +1,3 @@
-import Foundation
 import OpenCL
 
 public class Program {
