@@ -32,6 +32,8 @@
 		F3722F441C31509200D2F50B /* Kernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kernel.swift; sourceTree = "<group>"; };
 		F3722F451C31509200D2F50B /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		F3722F461C31509200D2F50B /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
+		F3722F501C3151A800D2F50B /* cl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cl.hpp; sourceTree = "<group>"; };
+		F3722F511C31599600D2F50B /* SwiftOpenCL.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftOpenCL.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		F3722F281C31506D00D2F50B = {
 			isa = PBXGroup;
 			children = (
+				F3722F511C31599600D2F50B /* SwiftOpenCL.playground */,
 				F3722F341C31506D00D2F50B /* SwiftOpenCL */,
 				F3722F331C31506D00D2F50B /* Products */,
 			);
@@ -67,6 +70,7 @@
 				F3722F3D1C31509200D2F50B /* Sources */,
 				F3722F351C31506D00D2F50B /* SwiftOpenCL.h */,
 				F3722F371C31506D00D2F50B /* Info.plist */,
+				F3722F501C3151A800D2F50B /* cl.hpp */,
 			);
 			path = SwiftOpenCL;
 			sourceTree = "<group>";

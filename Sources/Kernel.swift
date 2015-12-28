@@ -3,26 +3,26 @@ import OpenCL
 public class Kernel {
 	public var kernel: cl_kernel
 	
-	public init?(program: Program, kernelName: String) {
+	public init(program: Program, kernelName: String) throws {
+		
+		var status: cl_int = CL_SUCCESS
 		
 		kernel = kernelName.withCString() { cKernelName -> cl_kernel in
-			var status: cl_int = CL_SUCCESS
 			let sourceKernel = clCreateKernel(
 				program.program,
 				cKernelName,
 				&status)
 			
-			if status != CL_SUCCESS {
-				print("Create kernel error \(status)")				
-				return nil
-			}
-			
 			return sourceKernel
 		}
+		
+		try ClError.check(status)
 	}
 	
-	public func setArg<T>(position: cl_uint, buffer: Buffer<T>) -> cl_int {
-		return clSetKernelArg(kernel, position, sizeof(cl_mem), &(buffer.buffer))
+	public func setArg<T>(position: cl_uint, buffer: Buffer<T>) throws {
+		let err = clSetKernelArg(kernel, position, sizeof(cl_mem), &(buffer.buffer))
+		
+		try ClError.check(err)
 	}
 	
 	deinit {

@@ -8,6 +8,16 @@ public class Device: CustomStringConvertible {
 		deviceId = id
 	}
 	
+	class func getDefault() throws -> Device {
+		let context = try Context.getDefault()
+		
+		guard let device = try context.getInfo(cl_context_info(CL_CONTEXT_DEVICES), type: cl_device_id.self)?.first else {
+			throw ClError.CL_DEVICE_NOT_FOUND
+		}
+		
+		return Device(id: device)
+	}
+	
 	public var description: String {
 		return getStringInfo(CL_DEVICE_NAME) ?? "<No Device Name>"
 	}
@@ -21,7 +31,7 @@ public class Device: CustomStringConvertible {
 		return device
 	}
 	
-	public func getGenericInfo<T>(deviceInfo: Int32, infoType: T.Type) -> [T]? {
+	public func getInfo<T>(deviceInfo: Int32, infoType: T.Type) -> [T]? {
 		
 		// Determine the size of the value returned
 		var valueSize: size_t = 0
@@ -39,7 +49,7 @@ public class Device: CustomStringConvertible {
 	}
 	
 	public func getStringInfo(deviceInfo: Int32) -> String? {
-		if var cString = getGenericInfo(deviceInfo, infoType: CChar.self) {
+		if var cString = getInfo(deviceInfo, infoType: CChar.self) {
 			return String.fromCString(&cString)
 		}
 		
