@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F31E3A9F1C31632400A65086 /* NDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E3A9E1C31632400A65086 /* NDRange.swift */; };
 		F3722F361C31506D00D2F50B /* SwiftOpenCL.h in Headers */ = {isa = PBXBuildFile; fileRef = F3722F351C31506D00D2F50B /* SwiftOpenCL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F3722F471C31509200D2F50B /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3722F3E1C31509200D2F50B /* Buffer.swift */; };
 		F3722F481C31509200D2F50B /* ClErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3722F3F1C31509200D2F50B /* ClErrors.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F31E3A9E1C31632400A65086 /* NDRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDRange.swift; sourceTree = "<group>"; };
 		F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftOpenCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3722F351C31506D00D2F50B /* SwiftOpenCL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftOpenCL.h; sourceTree = "<group>"; };
 		F3722F371C31506D00D2F50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				F3722F441C31509200D2F50B /* Kernel.swift */,
 				F3722F451C31509200D2F50B /* Platform.swift */,
 				F3722F461C31509200D2F50B /* Program.swift */,
+				F31E3A9E1C31632400A65086 /* NDRange.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -172,6 +175,7 @@
 				F3722F4C1C31509200D2F50B /* GclCommandQueue.swift in Sources */,
 				F3722F471C31509200D2F50B /* Buffer.swift in Sources */,
 				F3722F4A1C31509200D2F50B /* Context.swift in Sources */,
+				F31E3A9F1C31632400A65086 /* NDRange.swift in Sources */,
 				F3722F491C31509200D2F50B /* CommandQueue.swift in Sources */,
 				F3722F481C31509200D2F50B /* ClErrors.swift in Sources */,
 				F3722F4F1C31509200D2F50B /* Program.swift in Sources */,

@@ -3,7 +3,12 @@ import OpenCL
 public class Program {
 	public var program: cl_program
 	
-	public init?(context: Context, programSource: String) {
+	public convenience init(context: Context, programPath: String) throws {
+		let programSource = try String(contentsOfFile: programPath, encoding: NSUTF8StringEncoding)
+		try self.init(context: context, programSource: programSource)
+	}
+	
+	public init(context: Context, programSource: String) throws {
 		
 		var status: cl_int = CL_SUCCESS
 		program = programSource.withCString() { (var cString) -> cl_program in
@@ -12,14 +17,11 @@ public class Program {
 				return sourceProgram
 			}
 		}
-		if status != CL_SUCCESS {
-			//			let error = ClError(rawValue: status) ?? ClError.CL_UNKNOWN_ERROR
-			print("Create program error \(status)")
-			return nil
-		}
+		
+		try ClError.check(status)
 	}
 	
-	public func build(device: Device) -> Bool {
+	public func build(device: Device) throws {
 		let status = clBuildProgram(program,
 			1,
 			&device.deviceId,
@@ -38,10 +40,8 @@ public class Program {
 			
 			print("CLProgram build log \(String.fromCString(&value))")
 			
-			return false
+			try ClError.check(status)
 		}
-		
-		return true
 	}
 	
 	deinit {

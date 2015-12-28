@@ -5,8 +5,9 @@ import OpenCL
 import SwiftOpenCL
 import XCPlayground
 
-let vecAddFilePath = NSBundle.mainBundle().pathForResource("vec_add", ofType: "cl")
-let vecAdd = try! String(contentsOfFile: vecAddFilePath!, encoding: NSUTF8StringEncoding)
+guard let vecAddFilePath = NSBundle.mainBundle().pathForResource("vec_add", ofType: "cl") else {
+	XCPlaygroundPage.currentPage.finishExecution()
+}
 
 let platforms = Platform.allPlatforms()
 print(platforms)
@@ -26,15 +27,14 @@ guard let firstDevice = devices.first else {
 }
 
 let commandQueue = try CommandQueue(context: context, device: firstDevice)
-guard let program = Program(context: context, programSource: vecAdd) else {
-	XCPlaygroundPage.currentPage.finishExecution()
-}
-program.build(firstDevice)
+let program = try Program(context: context, programPath: vecAddFilePath)
+try program.build(firstDevice)
+
 let kernel = try Kernel(program: program, kernelName: "vec_add")
-let times = 10
+
 var timeTaken: NSTimeInterval = 0.0
 
-for index in 0...5 {
+for index in 1...1 {
 	let elements = 2048 * index
 	
 	var a = Array(0..<cl_int(elements))
@@ -53,21 +53,20 @@ for index in 0...5 {
 	var workDim: cl_uint = 1
 	var globalWorkSize: size_t = elements
 	var globalWorkOffset: size_t = 0
-	clEnqueueNDRangeKernel(
-		commandQueue.queue,
-		kernel.kernel,
-		workDim,
-		&globalWorkOffset,
-		&globalWorkSize,
-		nil,
-		0,
-		nil,
-		nil)
+	
+	try commandQueue.enqueueNDRangeKernel(kernel,
+		offset: NDRange(size: 0),
+		global: NDRange(size: elements))
 
 	var c = cBuffer.enqueueRead(commandQueue)
 	
 	print(c)
 	timeTaken = NSDate().timeIntervalSinceDate(start)
+	
+	// Validate operation
+	for (idx, val) in a.enumerate() {
+		assert(c[idx] == val + val)
+	}
 }
 
 
