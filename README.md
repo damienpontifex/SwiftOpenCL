@@ -4,6 +4,43 @@ A swift wrapper around OpenCL inspired the C++ object wrapper.
 
 Interfacing with C libraries from Swift is a pain. Alongside this, the OpenCL library is quite verbose to setup a working environment. This is the start of a Swift wrapper around the OpenCL API.
 
+## Using Swift Package Manager
+
+Sample Package.swift file
+
+```swift
+import PackageDescription
+
+let package = Package(
+	name: "<Project Name>",
+    dependencies: [
+        .Package(url: "https://github.com/damienpontifex/SwiftOpenCL.git", majorVersion: 0)
+    ]
+)
+```
+
+Sample main.swift file
+
+```swift
+import SwiftOpenCL
+#if os(Linux)
+//TODO: Add OpenCL module import for Linux
+#else
+import OpenCL
+#endif
+
+let platforms = Platform.allPlatforms()
+
+for platform in platforms
+{
+    guard let extensions = platform.getInfo(CL_PLATFORM_EXTENSIONS) else {
+        continue
+    }
+    
+    print(extensions)
+}
+```
+
 ## Sample usage
 
 A simple vector addition kernel.
