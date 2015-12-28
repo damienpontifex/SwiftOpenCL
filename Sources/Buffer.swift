@@ -5,14 +5,18 @@ public class Buffer<T> {
 	var size: Int
 	var count: Int
 	
-	public init(context: Context, var readOnlyData: [T]) throws {
-		count = readOnlyData.count
+	public init(context: Context, memFlags: cl_mem_flags, var data: [T]) throws {
+		count = data.count
 		size = sizeof(T) * count
 		
 		var err: cl_int = CL_SUCCESS
-		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size, &readOnlyData, &err)
+		buffer = clCreateBuffer(context.context, memFlags, size, &data, &err)
 		
 		try ClError.check(err)
+	}
+	
+	public convenience init(context: Context, readOnlyData: [T]) throws {
+		try self.init(context: context, memFlags: cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), data: readOnlyData)
 	}
 	
 	public init(context: Context, count: Int) throws {
