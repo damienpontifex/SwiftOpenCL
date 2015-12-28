@@ -5,16 +5,24 @@ public class Buffer<T> {
 	var size: Int
 	var count: Int
 	
-	public init(context: Context, var readOnlyData: [T]) {
+	public init(context: Context, var readOnlyData: [T]) throws {
 		count = readOnlyData.count
 		size = sizeof(T) * count
-		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size, &readOnlyData, nil)
+		
+		var err: cl_int = CL_SUCCESS
+		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR), size, &readOnlyData, &err)
+		
+		try ClError.check(err)
 	}
 	
-	public init(context: Context, count: Int) {
+	public init(context: Context, count: Int) throws {
 		size = sizeof(T) * count
 		self.count = count
-		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), size, nil, nil)
+		
+		var err: cl_int = CL_SUCCESS
+		buffer = clCreateBuffer(context.context, cl_mem_flags(CL_MEM_WRITE_ONLY), size, nil, &err)
+		
+		try ClError.check(err)
 	}
 	
 	public func enqueueRead(queue: CommandQueue) -> [T] {

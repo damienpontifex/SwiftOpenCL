@@ -42,9 +42,9 @@ for index in 0...5 {
 	
 	let start = NSDate()
 	
-	let aBuffer = Buffer(context: context, readOnlyData: a)
-	let bBuffer = Buffer(context: context, readOnlyData: b)
-	let cBuffer = Buffer<cl_int>(context: context, count: elements)
+	let aBuffer = try Buffer(context: context, readOnlyData: a)
+	let bBuffer = try Buffer(context: context, readOnlyData: b)
+	let cBuffer = try Buffer<cl_int>(context: context, count: elements)
 	
 	try kernel.setArg(0, buffer: aBuffer)
 	try kernel.setArg(1, buffer: bBuffer)
