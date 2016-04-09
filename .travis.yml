@@ -1,0 +1,6 @@
+# .travis.yml
+osx_image: xcode7.3
+language: objective-c
+xcode_project: SwiftOpenCL.xcodeproj
+xcode_scheme: SwiftOpenCL
+xcode_sdk: macosx
