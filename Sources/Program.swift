@@ -30,7 +30,6 @@ public class Program {
 			nil)
 		
 		if status != CL_SUCCESS {
-			print("Build program error \(status)")
 	
 			var length: Int = 0
 			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), 0, nil, &length)
@@ -38,9 +37,7 @@ public class Program {
 			var value = Array<CChar>(count: length, repeatedValue: CChar(32))
 			clGetProgramBuildInfo(program, device.deviceId, cl_program_build_info(CL_PROGRAM_BUILD_LOG), length, &value, nil)
 			
-			print("CLProgram build log \(String.fromCString(&value))")
-			
-			try ClError.check(status)
+			throw ClError(err: status, errString: String.fromCString(&value))
 		}
 	}
 	

@@ -12,7 +12,7 @@ public class Device: CustomStringConvertible {
 		let context = try Context.getDefault()
 		
 		guard let device = try context.getInfo(cl_context_info(CL_CONTEXT_DEVICES), type: cl_device_id.self)?.first else {
-			throw ClError.CL_DEVICE_NOT_FOUND
+			throw ClError(err: CL_DEVICE_NOT_FOUND)
 		}
 		
 		return Device(id: device)
