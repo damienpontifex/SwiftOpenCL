@@ -1,0 +1,283 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F3F249911D39C61100005F9D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249901D39C61100005F9D /* main.swift */; };
+		F3F249991D39C62500005F9D /* SwiftOpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F249981D39C62500005F9D /* SwiftOpenCL.framework */; };
+		F3F2499B1D39CC4F00005F9D /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F2499A1D39CC4F00005F9D /* OpenCL.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F3F2498B1D39C61100005F9D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F3F2498D1D39C61100005F9D /* SwiftOpenCLSample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftOpenCLSample; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3F249901D39C61100005F9D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F3F249981D39C62500005F9D /* SwiftOpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftOpenCL.framework; path = "../../../Library/Developer/Xcode/DerivedData/SwiftOpenCL-hdpvcmzsepitquaamtiefuludgmc/Build/Products/Debug/SwiftOpenCL.framework"; sourceTree = "<group>"; };
+		F3F2499A1D39CC4F00005F9D /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		F3F2499C1D39CC5700005F9D /* libswiftOpenCL.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftOpenCL.tbd; path = System/Library/PrivateFrameworks/Swift/libswiftOpenCL.tbd; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F3F2498A1D39C61100005F9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3F2499B1D39CC4F00005F9D /* OpenCL.framework in Frameworks */,
+				F3F249991D39C62500005F9D /* SwiftOpenCL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F3F249841D39C61100005F9D = {
+			isa = PBXGroup;
+			children = (
+				F3F2498F1D39C61100005F9D /* SwiftOpenCLSample */,
+				F3F2498E1D39C61100005F9D /* Products */,
+				F3F249971D39C62500005F9D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F3F2498E1D39C61100005F9D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F3F2498D1D39C61100005F9D /* SwiftOpenCLSample */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F3F2498F1D39C61100005F9D /* SwiftOpenCLSample */ = {
+			isa = PBXGroup;
+			children = (
+				F3F249901D39C61100005F9D /* main.swift */,
+			);
+			path = SwiftOpenCLSample;
+			sourceTree = "<group>";
+		};
+		F3F249971D39C62500005F9D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3F2499C1D39CC5700005F9D /* libswiftOpenCL.tbd */,
+				F3F2499A1D39CC4F00005F9D /* OpenCL.framework */,
+				F3F249981D39C62500005F9D /* SwiftOpenCL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F3F2498C1D39C61100005F9D /* SwiftOpenCLSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3F249941D39C61100005F9D /* Build configuration list for PBXNativeTarget "SwiftOpenCLSample" */;
+			buildPhases = (
+				F3F249891D39C61100005F9D /* Sources */,
+				F3F2498A1D39C61100005F9D /* Frameworks */,
+				F3F2498B1D39C61100005F9D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftOpenCLSample;
+			productName = SwiftOpenCLSample;
+			productReference = F3F2498D1D39C61100005F9D /* SwiftOpenCLSample */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F3F249851D39C61100005F9D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Damien Pontifex";
+				TargetAttributes = {
+					F3F2498C1D39C61100005F9D = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = L3LZ87B268;
+						DevelopmentTeamName = "Damien Pontifex (Personal Team)";
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F3F249881D39C61100005F9D /* Build configuration list for PBXProject "SwiftOpenCLSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F3F249841D39C61100005F9D;
+			productRefGroup = F3F2498E1D39C61100005F9D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F3F2498C1D39C61100005F9D /* SwiftOpenCLSample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F3F249891D39C61100005F9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3F249911D39C61100005F9D /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F3F249921D39C61100005F9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F3F249931D39C61100005F9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F3F249951D39C61100005F9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/Swift",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F3F249961D39C61100005F9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/Swift",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F3F249881D39C61100005F9D /* Build configuration list for PBXProject "SwiftOpenCLSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3F249921D39C61100005F9D /* Debug */,
+				F3F249931D39C61100005F9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3F249941D39C61100005F9D /* Build configuration list for PBXNativeTarget "SwiftOpenCLSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3F249951D39C61100005F9D /* Debug */,
+				F3F249961D39C61100005F9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F3F249851D39C61100005F9D /* Project object */;
+}

@@ -10,7 +10,7 @@ import OpenCL
 
 public struct NDRange {
 	
-	var sizes: [size_t] = Array<size_t>(count: 3, repeatedValue: size_t(0))
+	var sizes: [size_t] = Array<size_t>(repeating: size_t(0), count: 3)
 	let dimensions: cl_uint
 	
 	public init(size: size_t) {

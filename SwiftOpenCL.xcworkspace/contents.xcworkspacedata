@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SwiftOpenCLSample/SwiftOpenCLSample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SwiftOpenCL/SwiftOpenCL.xcodeproj">
    </FileRef>
 </Workspace>

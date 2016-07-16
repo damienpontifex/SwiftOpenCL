@@ -1,6 +1,6 @@
 import OpenCL
 
-public struct ClError: ErrorType {
+public struct ClError: ErrorProtocol {
 	
 	var err: cl_int
 	var errString: String?
@@ -10,7 +10,7 @@ public struct ClError: ErrorType {
 		self.errString = errString
 	}
 	
-	static func check(err: cl_int) throws {
+	static func check(_ err: cl_int) throws {
 		if err != OpenCL.CL_SUCCESS {
 			throw ClError(err: err)
 		}

@@ -16,40 +16,46 @@ public class Platform : CustomStringConvertible {
 		var platformCount: cl_uint = 0
 		clGetPlatformIDs(0, nil, &platformCount)
 		
-		var platformIds = Array<cl_platform_id>(count: Int(platformCount), repeatedValue: nil)
+		var platformIds = Array<cl_platform_id?>(repeating: nil, count: Int(platformCount))
 		
 		clGetPlatformIDs(platformCount, &platformIds, nil)
 		
-		let platforms = platformIds.map {
-			Platform(id: $0)
+		let platforms: [Platform] = platformIds.flatMap {
+			guard let platformId = $0 else {
+				return nil
+			}
+			return Platform(id: platformId)
 		}
 		
 		return platforms
 	}
 	
-	public func getInfo(info: cl_platform_info) -> String? {
+	public func getInfo(_ info: cl_platform_info) -> String? {
 		
 		var infoSize: Int = 0
 		clGetPlatformInfo(platformId, info, 0, nil, &infoSize)
 		
-		var infoArray = Array<CChar>(count: infoSize, repeatedValue: CChar(32))
+		var infoArray = Array<CChar>(repeating: CChar(32), count: infoSize)
 		clGetPlatformInfo(platformId, info, infoSize, &infoArray, nil)
 		
-		let infoString = String.fromCString(&infoArray)
+		let infoString = String(cString: &infoArray)
 		return infoString
 	}
 	
-	public func getDevices(deviceType: Int32) -> [Device] {
+	public func getDevices(_ deviceType: Int32) -> [Device] {
 		
 		var deviceCount: cl_uint = 0
 		clGetDeviceIDs(platformId, cl_device_type(deviceType), 0, nil, &deviceCount)
 		
-		var deviceIds = Array<cl_device_id>(count: Int(deviceCount), repeatedValue: nil)
+		var deviceIds = Array<cl_device_id?>(repeating: nil, count: Int(deviceCount))
 		
 		clGetDeviceIDs(platformId, cl_device_type(deviceType), deviceCount, &deviceIds, nil)
 		
-		let devices = deviceIds.map {
-			Device(id: $0)
+		let devices: [Device] = deviceIds.flatMap {
+			guard let deviceId = $0 else {
+				return nil
+			}
+			return Device(id: deviceId)
 		}
 		
 		return devices

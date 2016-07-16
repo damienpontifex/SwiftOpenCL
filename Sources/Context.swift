@@ -6,14 +6,27 @@ public class Context {
 	public init(devices: [Device]) throws {
 		
 		let numDevices = devices.count
-		var deviceIds = devices.map {
+		let deviceIds: [cl_device_id?] = devices.map {
 			$0.deviceId
 		}
 		
-		var err: cl_int = CL_SUCCESS
-		context = clCreateContext(nil, cl_uint(numDevices), &deviceIds, nil, nil, &err)
-		
-		try ClError.check(err)
+		context = try deviceIds.withUnsafeBufferPointer { idBuffer -> cl_context in
+			
+			guard let idBase = idBuffer.baseAddress else {
+				//TODO: throw valid error
+				throw ClError(err: 0)
+			}
+			
+			var err: cl_int = CL_SUCCESS
+			guard let newContext = clCreateContext(nil, cl_uint(numDevices), idBase, nil, nil, &err) else {
+				//TODO: throw valid error
+				throw ClError(err: 0)
+			}
+			
+			try ClError.check(err)
+			
+			return newContext
+		}
 	}
 	
 	public convenience init(device: Device) throws {
@@ -35,18 +48,18 @@ public class Context {
 		return try Context(type: cl_device_type(CL_DEVICE_TYPE_DEFAULT))
 	}
 	
-	public func getInfo<T>(info: cl_context_info, type: T.Type) throws -> [T]? {
+	public func getInfo<T>(_ info: cl_context_info, type: T.Type) throws -> [T]? {
 		// Determine the size of the value returned
 		var valueSize: size_t = 0
 		clGetContextInfo(context, cl_context_info(info), 0, nil, &valueSize)
 		
-		let value = UnsafeMutablePointer<T>.alloc(valueSize / sizeof(type))
+		let value = UnsafeMutablePointer<T>(allocatingCapacity: valueSize / sizeof(type))
 		
 		// Actually get the value
 		clGetContextInfo(context, cl_device_info(info), valueSize, value, nil)
 		
 		let array = Array<T>(UnsafeBufferPointer(start: value, count: valueSize))
-		value.dealloc(valueSize)
+		value.deallocateCapacity(valueSize)
 		
 		return array
 	}

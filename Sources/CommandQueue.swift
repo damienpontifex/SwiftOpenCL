@@ -10,7 +10,7 @@ public class CommandQueue {
 		try ClError.check(err)
 	}
 	
-	public func enqueueNDRangeKernel(kernel: Kernel, offset: NDRange, global: NDRange) throws {
+	public func enqueueNDRangeKernel(_ kernel: Kernel, offset: NDRange, global: NDRange) throws {
 		
 		var globalWorkOffset = offset.sizes[0]
 		var globalWorkSize = global.sizes[0]

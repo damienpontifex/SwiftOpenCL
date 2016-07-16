@@ -1,7 +1,7 @@
 import OpenCL
 
 public class Kernel {
-	public var kernel: cl_kernel
+	public var kernel: cl_kernel?
 	
 	public init(program: Program, kernelName: String) throws {
 		
@@ -13,14 +13,14 @@ public class Kernel {
 				cKernelName,
 				&status)
 			
-			return sourceKernel
+			return sourceKernel!
 		}
 		
 		try ClError.check(status)
 	}
 	
-	public func setArg<T>(position: cl_uint, buffer: Buffer<T>) throws {
-		let err = clSetKernelArg(kernel, position, sizeof(cl_mem), &(buffer.buffer))
+	public func setArg<T>(_ position: cl_uint, buffer: Buffer<T>) throws {
+		let err = clSetKernelArg(kernel, position, sizeof(cl_mem.self), &(buffer.buffer))
 		
 		try ClError.check(err)
 	}

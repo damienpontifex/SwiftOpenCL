@@ -7,7 +7,7 @@ public class Buffer<T> {
 	
 	public init(context: Context, memFlags: cl_mem_flags, data: [T]) throws {
 		count = data.count
-		size = sizeof(T) * count
+		size = sizeof(T.self) * count
 		
 		var err: cl_int = CL_SUCCESS
 		var localData = data
@@ -21,7 +21,7 @@ public class Buffer<T> {
 	}
 	
 	public init(context: Context, count: Int) throws {
-		size = sizeof(T) * count
+		size = sizeof(T.self) * count
 		self.count = count
 		
 		var err: cl_int = CL_SUCCESS
@@ -30,18 +30,18 @@ public class Buffer<T> {
 		try ClError.check(err)
 	}
 	
-	public func enqueueRead(queue: CommandQueue) -> [T] {
-		let elements = UnsafeMutablePointer<T>.alloc(count)
+	public func enqueueRead(_ queue: CommandQueue) -> [T] {
+		let elements = UnsafeMutablePointer<T>(allocatingCapacity: count)
 		
 		clEnqueueReadBuffer(queue.queue, buffer, cl_bool(CL_TRUE), 0, size, elements, 0, nil, nil)
 		
 		let array = Array<T>(UnsafeBufferPointer(start: elements, count: count))
-		elements.dealloc(count)
+		elements.deallocateCapacity(count)
 		
 		return array
 	}
 	
-	public func enqueueWrite(queue: CommandQueue, data: [T]) {
+	public func enqueueWrite(_ queue: CommandQueue, data: [T]) {
 		//		clEnqueueWriteBuffer(queue.queue, buffer, <#T##cl_bool#>, <#T##Int#>, <#T##Int#>, <#T##UnsafePointer<Void>#>, <#T##cl_uint#>, <#T##UnsafePointer<cl_event>#>, <#T##UnsafeMutablePointer<cl_event>#>)
 	}
 	
