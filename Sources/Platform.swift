@@ -16,7 +16,7 @@ public class Platform : CustomStringConvertible {
 		var platformCount: cl_uint = 0
 		clGetPlatformIDs(0, nil, &platformCount)
 		
-		var platformIds = Array<cl_platform_id>(count: Int(platformCount), repeatedValue: cl_platform_id())
+		var platformIds = Array<cl_platform_id>(count: Int(platformCount), repeatedValue: nil)
 		
 		clGetPlatformIDs(platformCount, &platformIds, nil)
 		
@@ -44,7 +44,7 @@ public class Platform : CustomStringConvertible {
 		var deviceCount: cl_uint = 0
 		clGetDeviceIDs(platformId, cl_device_type(deviceType), 0, nil, &deviceCount)
 		
-		var deviceIds = Array<cl_device_id>(count: Int(deviceCount), repeatedValue: cl_device_id())
+		var deviceIds = Array<cl_device_id>(count: Int(deviceCount), repeatedValue: nil)
 		
 		clGetDeviceIDs(platformId, cl_device_type(deviceType), deviceCount, &deviceIds, nil)
 		

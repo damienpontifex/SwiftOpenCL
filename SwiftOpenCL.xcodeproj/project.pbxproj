@@ -132,11 +132,12 @@
 		F3722F291C31506D00D2F50B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Pontifex;
 				TargetAttributes = {
 					F3722F311C31506D00D2F50B = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -289,6 +290,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pontifex.SwiftOpenCL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -307,6 +309,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pontifex.SwiftOpenCL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

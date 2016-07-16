@@ -11,8 +11,9 @@ public class Program {
 	public init(context: Context, programSource: String) throws {
 		
 		var status: cl_int = CL_SUCCESS
-		program = programSource.withCString() { (var cString) -> cl_program in
-			return withUnsafeMutablePointer(&cString) { mutableCString -> cl_program in
+		program = programSource.withCString() { (cString) -> cl_program in
+			var localCString = cString
+			return withUnsafeMutablePointer(&localCString) { mutableCString -> cl_program in
 				let sourceProgram = clCreateProgramWithSource(context.context, 1, mutableCString, nil, &status)
 				return sourceProgram
 			}

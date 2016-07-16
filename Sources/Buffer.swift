@@ -5,12 +5,13 @@ public class Buffer<T> {
 	var size: Int
 	var count: Int
 	
-	public init(context: Context, memFlags: cl_mem_flags, var data: [T]) throws {
+	public init(context: Context, memFlags: cl_mem_flags, data: [T]) throws {
 		count = data.count
 		size = sizeof(T) * count
 		
 		var err: cl_int = CL_SUCCESS
-		buffer = clCreateBuffer(context.context, memFlags, size, &data, &err)
+		var localData = data
+		buffer = clCreateBuffer(context.context, memFlags, size, &localData, &err)
 		
 		try ClError.check(err)
 	}
