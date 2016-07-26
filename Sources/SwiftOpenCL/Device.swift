@@ -3,15 +3,18 @@ import OpenCL
 public enum DeviceType {
 	case cpu
 	case gpu
+	case all
 	
-	var nativeType: Int32 {
+	var nativeType: cl_device_type {
 		switch self {
+		case .all:
+			return cl_device_type(CL_DEVICE_TYPE_ALL)
 		case .gpu:
-			return CL_DEVICE_TYPE_GPU
+			return cl_device_type(CL_DEVICE_TYPE_GPU)
 		case .cpu:
 			fallthrough
 		default:
-			return CL_DEVICE_TYPE_CPU
+			return cl_device_type(CL_DEVICE_TYPE_CPU)
 		}
 	}
 }
@@ -25,7 +28,7 @@ public class Device: CustomStringConvertible {
 	}
 	
 	public class func `default`(_ deviceType: DeviceType = .gpu) -> Device? {
-		return Platform.allPlatforms().first?.getDevices(deviceType).first
+		return Platform.all.first?.getDevices(deviceType).first
 	}
 	
 	public var name: String {
@@ -48,7 +51,7 @@ public class Device: CustomStringConvertible {
 		return device
 	}
 	
-	public func getInfo<T>(_ deviceInfo: Int32, infoType: T.Type) -> [T]? {
+	public func getInfo<T>(_ deviceInfo: Int32) -> [T]? {
 		
 		// Determine the size of the value returned
 		var valueSize: size_t = 0
@@ -66,7 +69,7 @@ public class Device: CustomStringConvertible {
 	}
 	
 	public func getStringInfo(_ deviceInfo: Int32) -> String? {
-		if var cString = getInfo(deviceInfo, infoType: CChar.self) {
+		if var cString: [CChar] = getInfo(deviceInfo) {
 			return String(cString: &cString)
 		}
 		

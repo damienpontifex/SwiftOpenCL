@@ -12,7 +12,7 @@ public class Platform : CustomStringConvertible {
 		return name + " Platform running " + version
 	}
 	
-	public class func allPlatforms() -> [Platform] {
+	public class var all: [Platform] {
 		var platformCount: cl_uint = 0
 		clGetPlatformIDs(0, nil, &platformCount)
 		
@@ -45,11 +45,11 @@ public class Platform : CustomStringConvertible {
 	public func getDevices(_ deviceType: DeviceType = .gpu) -> [Device] {
 		
 		var deviceCount: cl_uint = 0
-		clGetDeviceIDs(platformId, cl_device_type(deviceType.nativeType), 0, nil, &deviceCount)
+		clGetDeviceIDs(platformId, deviceType.nativeType, 0, nil, &deviceCount)
 		
 		var deviceIds = Array<cl_device_id?>(repeating: nil, count: Int(deviceCount))
 		
-		clGetDeviceIDs(platformId, cl_device_type(deviceType.nativeType), deviceCount, &deviceIds, nil)
+		clGetDeviceIDs(platformId, deviceType.nativeType, deviceCount, &deviceIds, nil)
 		
 		let devices: [Device] = deviceIds.flatMap {
 			guard let deviceId = $0 else {
