@@ -3,10 +3,11 @@ import OpenCL
 public class Program {
 	public var program: cl_program?
 	
-	public convenience init(context: Context, programPath: String) throws {
-		let programSource = try String(contentsOfFile: programPath, encoding: String.Encoding.utf8)
-		try self.init(context: context, programSource: programSource)
-	}
+//	public convenience init(context: Context, programPath: String) throws {
+//		
+//		let programSource = try String(contentsOfFile: programPath)
+//		try self.init(context: context, programSource: programSource)
+//	}
 	
 	public init(context: Context, programSource: String) throws {
 		

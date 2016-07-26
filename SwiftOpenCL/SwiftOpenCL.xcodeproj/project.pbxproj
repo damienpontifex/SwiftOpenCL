@@ -9,17 +9,17 @@
 /* Begin PBXBuildFile section */
 		F32A28641D475FD500230C04 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A28631D475FD500230C04 /* main.swift */; };
 		F32A286A1D475FE100230C04 /* SwiftOpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */; };
+		F347EA831D476729009F72C7 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA791D476729009F72C7 /* Buffer.swift */; };
+		F347EA841D476729009F72C7 /* ClErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7A1D476729009F72C7 /* ClErrors.swift */; };
+		F347EA851D476729009F72C7 /* CommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7B1D476729009F72C7 /* CommandQueue.swift */; };
+		F347EA861D476729009F72C7 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7C1D476729009F72C7 /* Context.swift */; };
+		F347EA871D476729009F72C7 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7D1D476729009F72C7 /* Device.swift */; };
+		F347EA881D476729009F72C7 /* GclCommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7E1D476729009F72C7 /* GclCommandQueue.swift */; };
+		F347EA891D476729009F72C7 /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7F1D476729009F72C7 /* Kernel.swift */; };
+		F347EA8A1D476729009F72C7 /* NDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA801D476729009F72C7 /* NDRange.swift */; };
+		F347EA8B1D476729009F72C7 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA811D476729009F72C7 /* Platform.swift */; };
+		F347EA8C1D476729009F72C7 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA821D476729009F72C7 /* Program.swift */; };
 		F3722F361C31506D00D2F50B /* SwiftOpenCL.h in Headers */ = {isa = PBXBuildFile; fileRef = F3722F351C31506D00D2F50B /* SwiftOpenCL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F3F2497A1D39C5C800005F9D /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249701D39C5C800005F9D /* Buffer.swift */; };
-		F3F2497B1D39C5C800005F9D /* ClErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249711D39C5C800005F9D /* ClErrors.swift */; };
-		F3F2497C1D39C5C800005F9D /* CommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249721D39C5C800005F9D /* CommandQueue.swift */; };
-		F3F2497D1D39C5C800005F9D /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249731D39C5C800005F9D /* Context.swift */; };
-		F3F2497E1D39C5C800005F9D /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249741D39C5C800005F9D /* Device.swift */; };
-		F3F2497F1D39C5C800005F9D /* GclCommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249751D39C5C800005F9D /* GclCommandQueue.swift */; };
-		F3F249801D39C5C800005F9D /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249761D39C5C800005F9D /* Kernel.swift */; };
-		F3F249811D39C5C800005F9D /* NDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249771D39C5C800005F9D /* NDRange.swift */; };
-		F3F249821D39C5C800005F9D /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249781D39C5C800005F9D /* Platform.swift */; };
-		F3F249831D39C5C800005F9D /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249791D39C5C800005F9D /* Program.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,21 +47,21 @@
 /* Begin PBXFileReference section */
 		F32A28611D475FD400230C04 /* SimpleKernel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleKernel; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32A28631D475FD500230C04 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F347EA791D476729009F72C7 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = SwiftOpenCL/Buffer.swift; sourceTree = "<group>"; };
+		F347EA7A1D476729009F72C7 /* ClErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClErrors.swift; path = SwiftOpenCL/ClErrors.swift; sourceTree = "<group>"; };
+		F347EA7B1D476729009F72C7 /* CommandQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommandQueue.swift; path = SwiftOpenCL/CommandQueue.swift; sourceTree = "<group>"; };
+		F347EA7C1D476729009F72C7 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Context.swift; path = SwiftOpenCL/Context.swift; sourceTree = "<group>"; };
+		F347EA7D1D476729009F72C7 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = SwiftOpenCL/Device.swift; sourceTree = "<group>"; };
+		F347EA7E1D476729009F72C7 /* GclCommandQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GclCommandQueue.swift; path = SwiftOpenCL/GclCommandQueue.swift; sourceTree = "<group>"; };
+		F347EA7F1D476729009F72C7 /* Kernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Kernel.swift; path = SwiftOpenCL/Kernel.swift; sourceTree = "<group>"; };
+		F347EA801D476729009F72C7 /* NDRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NDRange.swift; path = SwiftOpenCL/NDRange.swift; sourceTree = "<group>"; };
+		F347EA811D476729009F72C7 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = SwiftOpenCL/Platform.swift; sourceTree = "<group>"; };
+		F347EA821D476729009F72C7 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Program.swift; path = SwiftOpenCL/Program.swift; sourceTree = "<group>"; };
 		F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftOpenCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3722F351C31506D00D2F50B /* SwiftOpenCL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftOpenCL.h; sourceTree = "<group>"; };
 		F3722F371C31506D00D2F50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3722F501C3151A800D2F50B /* cl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cl.hpp; sourceTree = "<group>"; };
 		F3722F511C31599600D2F50B /* SwiftOpenCL.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftOpenCL.playground; sourceTree = "<group>"; };
-		F3F249701D39C5C800005F9D /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
-		F3F249711D39C5C800005F9D /* ClErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClErrors.swift; sourceTree = "<group>"; };
-		F3F249721D39C5C800005F9D /* CommandQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandQueue.swift; sourceTree = "<group>"; };
-		F3F249731D39C5C800005F9D /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
-		F3F249741D39C5C800005F9D /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		F3F249751D39C5C800005F9D /* GclCommandQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GclCommandQueue.swift; sourceTree = "<group>"; };
-		F3F249761D39C5C800005F9D /* Kernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kernel.swift; sourceTree = "<group>"; };
-		F3F249771D39C5C800005F9D /* NDRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDRange.swift; sourceTree = "<group>"; };
-		F3F249781D39C5C800005F9D /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
-		F3F249791D39C5C800005F9D /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,16 +124,16 @@
 		F3722F3D1C31509200D2F50B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F3F249701D39C5C800005F9D /* Buffer.swift */,
-				F3F249711D39C5C800005F9D /* ClErrors.swift */,
-				F3F249721D39C5C800005F9D /* CommandQueue.swift */,
-				F3F249731D39C5C800005F9D /* Context.swift */,
-				F3F249741D39C5C800005F9D /* Device.swift */,
-				F3F249751D39C5C800005F9D /* GclCommandQueue.swift */,
-				F3F249761D39C5C800005F9D /* Kernel.swift */,
-				F3F249771D39C5C800005F9D /* NDRange.swift */,
-				F3F249781D39C5C800005F9D /* Platform.swift */,
-				F3F249791D39C5C800005F9D /* Program.swift */,
+				F347EA791D476729009F72C7 /* Buffer.swift */,
+				F347EA7A1D476729009F72C7 /* ClErrors.swift */,
+				F347EA7B1D476729009F72C7 /* CommandQueue.swift */,
+				F347EA7C1D476729009F72C7 /* Context.swift */,
+				F347EA7D1D476729009F72C7 /* Device.swift */,
+				F347EA7E1D476729009F72C7 /* GclCommandQueue.swift */,
+				F347EA7F1D476729009F72C7 /* Kernel.swift */,
+				F347EA801D476729009F72C7 /* NDRange.swift */,
+				F347EA811D476729009F72C7 /* Platform.swift */,
+				F347EA821D476729009F72C7 /* Program.swift */,
 			);
 			name = Sources;
 			path = ../Sources;
@@ -252,16 +252,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3F249831D39C5C800005F9D /* Program.swift in Sources */,
-				F3F249821D39C5C800005F9D /* Platform.swift in Sources */,
-				F3F2497F1D39C5C800005F9D /* GclCommandQueue.swift in Sources */,
-				F3F2497A1D39C5C800005F9D /* Buffer.swift in Sources */,
-				F3F2497D1D39C5C800005F9D /* Context.swift in Sources */,
-				F3F2497C1D39C5C800005F9D /* CommandQueue.swift in Sources */,
-				F3F2497B1D39C5C800005F9D /* ClErrors.swift in Sources */,
-				F3F2497E1D39C5C800005F9D /* Device.swift in Sources */,
-				F3F249801D39C5C800005F9D /* Kernel.swift in Sources */,
-				F3F249811D39C5C800005F9D /* NDRange.swift in Sources */,
+				F347EA8C1D476729009F72C7 /* Program.swift in Sources */,
+				F347EA8B1D476729009F72C7 /* Platform.swift in Sources */,
+				F347EA881D476729009F72C7 /* GclCommandQueue.swift in Sources */,
+				F347EA831D476729009F72C7 /* Buffer.swift in Sources */,
+				F347EA861D476729009F72C7 /* Context.swift in Sources */,
+				F347EA851D476729009F72C7 /* CommandQueue.swift in Sources */,
+				F347EA841D476729009F72C7 /* ClErrors.swift in Sources */,
+				F347EA871D476729009F72C7 /* Device.swift in Sources */,
+				F347EA891D476729009F72C7 /* Kernel.swift in Sources */,
+				F347EA8A1D476729009F72C7 /* NDRange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +434,7 @@
 				F32A28661D475FD500230C04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F3722F2C1C31506D00D2F50B /* Build configuration list for PBXProject "SwiftOpenCL" */ = {
 			isa = XCConfigurationList;
