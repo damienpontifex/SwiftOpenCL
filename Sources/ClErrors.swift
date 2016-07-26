@@ -2,8 +2,8 @@ import OpenCL
 
 public struct ClError: ErrorProtocol {
 	
-	var err: cl_int
-	var errString: String?
+	public var err: cl_int
+	public var errString: String?
 	
 	public init(err: cl_int, errString: String? = nil) {
 		self.err = err

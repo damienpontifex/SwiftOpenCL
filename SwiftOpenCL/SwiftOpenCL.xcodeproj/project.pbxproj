@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F32A28641D475FD500230C04 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A28631D475FD500230C04 /* main.swift */; };
+		F32A286A1D475FE100230C04 /* SwiftOpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */; };
 		F3722F361C31506D00D2F50B /* SwiftOpenCL.h in Headers */ = {isa = PBXBuildFile; fileRef = F3722F351C31506D00D2F50B /* SwiftOpenCL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F3F2497A1D39C5C800005F9D /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249701D39C5C800005F9D /* Buffer.swift */; };
 		F3F2497B1D39C5C800005F9D /* ClErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249711D39C5C800005F9D /* ClErrors.swift */; };
@@ -20,7 +22,31 @@
 		F3F249831D39C5C800005F9D /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F249791D39C5C800005F9D /* Program.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F32A28681D475FDC00230C04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3722F291C31506D00D2F50B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3722F311C31506D00D2F50B;
+			remoteInfo = SwiftOpenCL;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F32A285F1D475FD400230C04 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F32A28611D475FD400230C04 /* SimpleKernel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleKernel; sourceTree = BUILT_PRODUCTS_DIR; };
+		F32A28631D475FD500230C04 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftOpenCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3722F351C31506D00D2F50B /* SwiftOpenCL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftOpenCL.h; sourceTree = "<group>"; };
 		F3722F371C31506D00D2F50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +65,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F32A285E1D475FD400230C04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F32A286A1D475FE100230C04 /* SwiftOpenCL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F3722F2E1C31506D00D2F50B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,11 +83,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F32A28621D475FD500230C04 /* SimpleKernel */ = {
+			isa = PBXGroup;
+			children = (
+				F32A28631D475FD500230C04 /* main.swift */,
+			);
+			path = SimpleKernel;
+			sourceTree = "<group>";
+		};
 		F3722F281C31506D00D2F50B = {
 			isa = PBXGroup;
 			children = (
 				F3722F511C31599600D2F50B /* SwiftOpenCL.playground */,
 				F3722F341C31506D00D2F50B /* SwiftOpenCL */,
+				F32A28621D475FD500230C04 /* SimpleKernel */,
 				F3722F331C31506D00D2F50B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */,
+				F32A28611D475FD400230C04 /* SimpleKernel */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,6 +153,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F32A28601D475FD400230C04 /* SimpleKernel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F32A28671D475FD500230C04 /* Build configuration list for PBXNativeTarget "SimpleKernel" */;
+			buildPhases = (
+				F32A285D1D475FD400230C04 /* Sources */,
+				F32A285E1D475FD400230C04 /* Frameworks */,
+				F32A285F1D475FD400230C04 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F32A28691D475FDC00230C04 /* PBXTargetDependency */,
+			);
+			name = SimpleKernel;
+			productName = SimpleKernel;
+			productReference = F32A28611D475FD400230C04 /* SimpleKernel */;
+			productType = "com.apple.product-type.tool";
+		};
 		F3722F311C31506D00D2F50B /* SwiftOpenCL */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3722F3A1C31506D00D2F50B /* Build configuration list for PBXNativeTarget "SwiftOpenCL" */;
@@ -133,9 +195,16 @@
 		F3722F291C31506D00D2F50B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Pontifex;
 				TargetAttributes = {
+					F32A28601D475FD400230C04 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = L3LZ87B268;
+						DevelopmentTeamName = "Damien Pontifex (Personal Team)";
+						ProvisioningStyle = Automatic;
+					};
 					F3722F311C31506D00D2F50B = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
@@ -155,6 +224,7 @@
 			projectRoot = "";
 			targets = (
 				F3722F311C31506D00D2F50B /* SwiftOpenCL */,
+				F32A28601D475FD400230C04 /* SimpleKernel */,
 			);
 		};
 /* End PBXProject section */
@@ -170,6 +240,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F32A285D1D475FD400230C04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F32A28641D475FD500230C04 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F3722F2D1C31506D00D2F50B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,7 +267,35 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F32A28691D475FDC00230C04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3722F311C31506D00D2F50B /* SwiftOpenCL */;
+			targetProxy = F32A28681D475FDC00230C04 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F32A28651D475FD500230C04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F32A28661D475FD500230C04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		F3722F381C31506D00D2F50B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,6 +427,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F32A28671D475FD500230C04 /* Build configuration list for PBXNativeTarget "SimpleKernel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F32A28651D475FD500230C04 /* Debug */,
+				F32A28661D475FD500230C04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		F3722F2C1C31506D00D2F50B /* Build configuration list for PBXProject "SwiftOpenCL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
