@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F32A28641D475FD500230C04 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A28631D475FD500230C04 /* main.swift */; };
 		F32A286A1D475FE100230C04 /* SwiftOpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3722F321C31506D00D2F50B /* SwiftOpenCL.framework */; };
 		F347EA831D476729009F72C7 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA791D476729009F72C7 /* Buffer.swift */; };
 		F347EA841D476729009F72C7 /* ClErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA7A1D476729009F72C7 /* ClErrors.swift */; };
@@ -20,6 +19,7 @@
 		F347EA8B1D476729009F72C7 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA811D476729009F72C7 /* Platform.swift */; };
 		F347EA8C1D476729009F72C7 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = F347EA821D476729009F72C7 /* Program.swift */; };
 		F3722F361C31506D00D2F50B /* SwiftOpenCL.h in Headers */ = {isa = PBXBuildFile; fileRef = F3722F351C31506D00D2F50B /* SwiftOpenCL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3B46AC41D47870B00C1E763 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B46AC31D47870B00C1E763 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +46,6 @@
 
 /* Begin PBXFileReference section */
 		F32A28611D475FD400230C04 /* SimpleKernel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleKernel; sourceTree = BUILT_PRODUCTS_DIR; };
-		F32A28631D475FD500230C04 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F347EA791D476729009F72C7 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = SwiftOpenCL/Buffer.swift; sourceTree = "<group>"; };
 		F347EA7A1D476729009F72C7 /* ClErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClErrors.swift; path = SwiftOpenCL/ClErrors.swift; sourceTree = "<group>"; };
 		F347EA7B1D476729009F72C7 /* CommandQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommandQueue.swift; path = SwiftOpenCL/CommandQueue.swift; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		F3722F371C31506D00D2F50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3722F501C3151A800D2F50B /* cl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cl.hpp; sourceTree = "<group>"; };
 		F3722F511C31599600D2F50B /* SwiftOpenCL.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftOpenCL.playground; sourceTree = "<group>"; };
+		F3B46AC31D47870B00C1E763 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../../Sources/SimpleKernel/main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 		F32A28621D475FD500230C04 /* SimpleKernel */ = {
 			isa = PBXGroup;
 			children = (
-				F32A28631D475FD500230C04 /* main.swift */,
+				F3B46AC31D47870B00C1E763 /* main.swift */,
 			);
 			path = SimpleKernel;
 			sourceTree = "<group>";
@@ -203,6 +203,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = L3LZ87B268;
 						DevelopmentTeamName = "Damien Pontifex (Personal Team)";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					F3722F311C31506D00D2F50B = {
@@ -244,7 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F32A28641D475FD500230C04 /* main.swift in Sources */,
+				F3B46AC41D47870B00C1E763 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +281,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -290,7 +294,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

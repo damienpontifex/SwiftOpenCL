@@ -42,14 +42,14 @@ public class Platform : CustomStringConvertible {
 		return infoString
 	}
 	
-	public func getDevices(_ deviceType: Int32) -> [Device] {
+	public func getDevices(_ deviceType: DeviceType = .gpu) -> [Device] {
 		
 		var deviceCount: cl_uint = 0
-		clGetDeviceIDs(platformId, cl_device_type(deviceType), 0, nil, &deviceCount)
+		clGetDeviceIDs(platformId, cl_device_type(deviceType.nativeType), 0, nil, &deviceCount)
 		
 		var deviceIds = Array<cl_device_id?>(repeating: nil, count: Int(deviceCount))
 		
-		clGetDeviceIDs(platformId, cl_device_type(deviceType), deviceCount, &deviceIds, nil)
+		clGetDeviceIDs(platformId, cl_device_type(deviceType.nativeType), deviceCount, &deviceIds, nil)
 		
 		let devices: [Device] = deviceIds.flatMap {
 			guard let deviceId = $0 else {

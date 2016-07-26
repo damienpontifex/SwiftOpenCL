@@ -10,15 +10,19 @@ import Foundation
 import SwiftOpenCL
 import OpenCL
 
-guard let device = Platform.allPlatforms().first?.getDevices(CL_DEVICE_TYPE_CPU).first else {
+guard let device = Device.default() else {
 	exit(EXIT_FAILURE)
 }
 
 do {
+	print("Using device \(device)")
 	let context = try Context(device: device)
 	
-	let a = try Buffer<cl_float>(context: context, readOnlyData: [1, 2, 3, 4])
-	let b = try Buffer<cl_float>(context: context, readOnlyData: [5, 6, 7, 8])
+	let aInput: [cl_float] = [1, 2, 3, 4]
+	let bInput: [cl_float] = [5, 6, 7, 8]
+	
+	let a = try Buffer<cl_float>(context: context, readOnlyData: aInput)
+	let b = try Buffer<cl_float>(context: context, readOnlyData: bInput)
 	let c = try Buffer<cl_float>(context: context, count: 4)
 	
 	let source =
@@ -46,7 +50,9 @@ do {
 	
 	let cResult = c.enqueueRead(queue)
 	
-	print("c: [\(cResult[0]), \(cResult[1]), \(cResult[2]), \(cResult[3])]")
+	print("a: \(aInput)")
+	print("b: \(bInput)")
+	print("c: \(cResult)")
 	
 } catch let error as ClError {
 	print("Error \(error.err). \(error.errString)")

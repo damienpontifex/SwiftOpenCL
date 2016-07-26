@@ -1,5 +1,21 @@
 import OpenCL
 
+public enum DeviceType {
+	case cpu
+	case gpu
+	
+	var nativeType: Int32 {
+		switch self {
+		case .gpu:
+			return CL_DEVICE_TYPE_GPU
+		case .cpu:
+			fallthrough
+		default:
+			return CL_DEVICE_TYPE_CPU
+		}
+	}
+}
+
 public class Device: CustomStringConvertible {
 	
 	public var deviceId: cl_device_id
@@ -8,18 +24,19 @@ public class Device: CustomStringConvertible {
 		deviceId = id
 	}
 	
-	class func getDefault() throws -> Device {
-		let context = try Context.getDefault()
-		
-		guard let device = try context.getInfo(cl_context_info(CL_CONTEXT_DEVICES), type: cl_device_id.self)?.first else {
-			throw ClError(err: CL_DEVICE_NOT_FOUND)
+	public class func `default`(_ deviceType: DeviceType = .gpu) -> Device? {
+		return Platform.allPlatforms().first?.getDevices(deviceType).first
+	}
+	
+	public var name: String {
+		guard var chars: [CChar] = getDeviceInfo(CL_DEVICE_NAME, deviceId: deviceId) else {
+			return "<No Device Name>"
 		}
-		
-		return Device(id: device)
+		return String(cString: &chars)
 	}
 	
 	public var description: String {
-		return getStringInfo(CL_DEVICE_NAME) ?? "<No Device Name>"
+		return name
 	}
 	
 	public class func getDefault(_ type: Int32) -> Device {
@@ -55,4 +72,23 @@ public class Device: CustomStringConvertible {
 		
 		return nil
 	}
+}
+
+func getDeviceInfo<T>(_ deviceInfo: Int32, deviceId: cl_device_id) -> [T]? {
+	// Determine the size of the value returned
+	var valueSize: size_t = 0
+	clGetDeviceInfo(deviceId, cl_device_info(deviceInfo), 0, nil, &valueSize)
+	
+	// Allocate some memory for the value
+	let value = UnsafeMutablePointer<T>(allocatingCapacity: valueSize)
+	
+	// Actually get the value
+	clGetDeviceInfo(deviceId, cl_device_info(deviceInfo), valueSize, value, nil)
+	
+	// Conver the memory to a Swift array for easier handling
+	let array = Array<T>(UnsafeBufferPointer(start: value, count: valueSize))
+	// Deallocate our manual memory
+	value.deallocateCapacity(valueSize)
+	
+	return array
 }
