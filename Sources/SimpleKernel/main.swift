@@ -39,9 +39,7 @@ do {
 	
 	let kernel = try Kernel(program: program, kernelName: "add")
 	
-	try kernel.setArg(0, buffer: a)
-	try kernel.setArg(1, buffer: b)
-	try kernel.setArg(2, buffer: c)
+	try kernel.setArgs(a, b, c)
 	
 	let queue = try CommandQueue(context: context, device: device)
 	

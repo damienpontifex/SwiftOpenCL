@@ -25,6 +25,14 @@ public class Kernel {
 		try ClError.check(err)
 	}
 	
+	public func setArgs<T>(_ buffer: Buffer<T>...) throws {
+		for (idx, item) in buffer.enumerated() {
+			let err = clSetKernelArg(kernel, cl_uint(idx), sizeof(cl_mem.self), &(item.buffer))
+			
+			try ClError.check(err)
+		}
+	}
+	
 	deinit {
 		if kernel != nil {
 			clReleaseKernel(kernel)
