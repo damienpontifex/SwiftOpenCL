@@ -31,12 +31,12 @@ public class Buffer<T> {
 	}
 	
 	public func enqueueRead(_ queue: CommandQueue) -> [T] {
-		let elements = UnsafeMutablePointer<T>(allocatingCapacity: count)
+		let elements = UnsafeMutablePointer<T>.allocate(capacity: count)
 		
 		clEnqueueReadBuffer(queue.queue, buffer, cl_bool(CL_TRUE), 0, size, elements, 0, nil, nil)
 		
 		let array = Array<T>(UnsafeBufferPointer(start: elements, count: count))
-		elements.deallocateCapacity(count)
+		elements.deallocate(capacity: count)
 		
 		return array
 	}

@@ -57,13 +57,13 @@ public class Device: CustomStringConvertible {
 		var valueSize: size_t = 0
 		clGetDeviceInfo(deviceId, cl_device_info(deviceInfo), 0, nil, &valueSize)
 		
-		let value = UnsafeMutablePointer<T>(allocatingCapacity: valueSize)
+		let value = UnsafeMutablePointer<T>.allocate(capacity: valueSize)
 		
 		// Actually get the value
 		clGetDeviceInfo(self.deviceId, cl_device_info(deviceInfo), valueSize, value, nil)
 		
 		let array = Array<T>(UnsafeBufferPointer(start: value, count: valueSize))
-		value.deallocateCapacity(valueSize)
+		value.deallocate(capacity: valueSize)
 		
 		return array
 	}
@@ -83,7 +83,7 @@ func getDeviceInfo<T>(_ deviceInfo: Int32, deviceId: cl_device_id) -> [T]? {
 	clGetDeviceInfo(deviceId, cl_device_info(deviceInfo), 0, nil, &valueSize)
 	
 	// Allocate some memory for the value
-	let value = UnsafeMutablePointer<T>(allocatingCapacity: valueSize)
+	let value = UnsafeMutablePointer<T>.allocate(capacity: valueSize)
 	
 	// Actually get the value
 	clGetDeviceInfo(deviceId, cl_device_info(deviceInfo), valueSize, value, nil)
@@ -91,7 +91,7 @@ func getDeviceInfo<T>(_ deviceInfo: Int32, deviceId: cl_device_id) -> [T]? {
 	// Conver the memory to a Swift array for easier handling
 	let array = Array<T>(UnsafeBufferPointer(start: value, count: valueSize))
 	// Deallocate our manual memory
-	value.deallocateCapacity(valueSize)
+	value.deallocate(capacity: valueSize)
 	
 	return array
 }

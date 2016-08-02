@@ -1,6 +1,6 @@
 import OpenCL
 
-public struct ClError: ErrorProtocol {
+public struct ClError: Error {
 	
 	public var err: cl_int
 	public var errString: String?

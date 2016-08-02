@@ -10,11 +10,11 @@ import Foundation
 import SwiftOpenCL
 import OpenCL
 
-let platforms = Platform.allPlatforms()
+let platforms = Platform.all
 
 guard let thisPlatform = platforms.first else {
 	exit(EXIT_FAILURE)
 }
 
-let devices = thisPlatform.getDevices(CL_DEVICE_TYPE_CPU)
+let devices = thisPlatform.getDevices(.cpu)
 print("Found \(devices.count) CPU devices")
