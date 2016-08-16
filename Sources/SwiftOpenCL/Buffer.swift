@@ -7,7 +7,7 @@ public class Buffer<T> {
 	
 	public init(context: Context, memFlags: cl_mem_flags, data: [T]) throws {
 		count = data.count
-		size = sizeof(T.self) * count
+		size = MemoryLayout<T>.size * count
 		
 		var err: cl_int = CL_SUCCESS
 		var localData = data
@@ -21,7 +21,7 @@ public class Buffer<T> {
 	}
 	
 	public init(context: Context, count: Int) throws {
-		size = sizeof(T.self) * count
+		size = MemoryLayout<T>.size * count
 		self.count = count
 		
 		var err: cl_int = CL_SUCCESS

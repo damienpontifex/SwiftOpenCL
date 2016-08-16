@@ -14,7 +14,7 @@ public class Program {
 		var status: cl_int = CL_SUCCESS
 		program = programSource.withCString() { (cString) -> cl_program? in
 			var localCString: UnsafePointer<Int8>? = cString
-			return withUnsafeMutablePointer(&localCString) { (mutableCString) -> cl_program? in
+			return withUnsafeMutablePointer(to: &localCString) { (mutableCString) -> cl_program? in
 				let sourceProgram = clCreateProgramWithSource(context.context, 1, mutableCString, nil, &status)
 				return sourceProgram
 			}

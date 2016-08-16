@@ -53,7 +53,7 @@ public class Context {
 		var valueSize: size_t = 0
 		clGetContextInfo(context, cl_context_info(info), 0, nil, &valueSize)
 		
-		let value = UnsafeMutablePointer<T>.allocate(capacity: valueSize / sizeof(type))
+		let value = UnsafeMutablePointer<T>.allocate(capacity: valueSize / MemoryLayout<T>.size)
 		
 		// Actually get the value
 		clGetContextInfo(context, cl_device_info(info), valueSize, value, nil)

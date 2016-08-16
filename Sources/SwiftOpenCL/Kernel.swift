@@ -20,14 +20,14 @@ public class Kernel {
 	}
 	
 	public func setArg<T>(_ position: cl_uint, buffer: Buffer<T>) throws {
-		let err = clSetKernelArg(kernel, position, sizeof(cl_mem.self), &(buffer.buffer))
+		let err = clSetKernelArg(kernel, position, MemoryLayout<cl_mem>.size, &(buffer.buffer))
 		
 		try ClError.check(err)
 	}
 	
 	public func setArgs<T>(_ buffer: Buffer<T>...) throws {
 		for (idx, item) in buffer.enumerated() {
-			let err = clSetKernelArg(kernel, cl_uint(idx), sizeof(cl_mem.self), &(item.buffer))
+			let err = clSetKernelArg(kernel, cl_uint(idx), MemoryLayout<cl_mem>.size, &(item.buffer))
 			
 			try ClError.check(err)
 		}
