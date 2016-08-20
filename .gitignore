@@ -9,6 +9,7 @@
 ## Build generated
 build/
 DerivedData
+SwiftOpenCL.xcodeproj
 
 ## Various settings
 *.pbxuser
